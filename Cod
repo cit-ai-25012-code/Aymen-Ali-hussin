@@ -1,0 +1,93 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <iomanip>
+
+using namespace std;
+
+struct Student {
+    string name;
+    int id;
+    double midtermGrade;
+    double finalGrade;
+};
+
+void inputStudentData(Student &s) {
+    cout << "\n========= Enter New Student Data =========" << endl;
+    cout << "Enter student name: ";
+    cin.ignore();
+    getline(cin, s.name);
+    
+    cout << "Enter student ID: ";
+    cin >> s.id;
+    
+    do {
+        cout << "Enter midterm grade (0 to 40): ";
+        cin >> s.midtermGrade;
+        if(s.midtermGrade < 0 || s.midtermGrade > 40) {
+            cout << "Error: Grade must be between 0 and 40!" << endl;
+        }
+    } while(s.midtermGrade < 0 || s.midtermGrade > 40);
+    
+    do {
+        cout << "Enter final exam grade (0 to 60): ";
+        cin >> s.finalGrade;
+        if(s.finalGrade < 0 || s.finalGrade > 60) {
+            cout << "Error: Grade must be between 0 and 60!" << endl;
+        }
+    } while(s.finalGrade < 0 || s.finalGrade > 60);
+}
+
+void displayStudentReport(Student s) {
+    double totalScore = s.midtermGrade + s.finalGrade;
+    
+    cout << "\n=========================================" << endl;
+    cout << "             ACADEMIC REPORT               " << endl;
+    cout << "=========================================" << endl;
+    cout << fixed << setprecision(2);
+    cout << "- Student Name    : " << s.name << endl;
+    cout << "- Student ID      : " << s.id << endl;
+    cout << "- Midterm Grade   : " << s.midtermGrade << " out of 40" << endl;
+    cout << "- Final Grade     : " << s.finalGrade << " out of 60" << endl;
+    cout << "-----------------------------------------" << endl;
+    cout << "- Total Score     : " << totalScore << " out of 100" << endl;
+    cout << "- Student Status  : ";
+    
+    if(totalScore >= 50) {
+        cout << "Passed 👍" << endl;
+    } else {
+        cout << "Failed 👎" << endl;
+    }
+    cout << "=========================================" << endl;
+}
+
+int main() {
+    Student myStudent;
+    char choice;
+    
+    do {
+        cout << "\n===== Student Grade Management System =====" << endl;
+        cout << "1. Enter Student Data" << endl;
+        cout << "2. Display Report" << endl;
+        cout << "3. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        
+        if(choice == '1') {
+            inputStudentData(myStudent);
+            cout << "\n*** Student data saved successfully! ***" << endl;
+        }
+        else if(choice == '2') {
+            displayStudentReport(myStudent);
+        }
+        else if(choice == '3') {
+            cout << "\n*** Thank you! Goodbye! ***" << endl;
+        }
+        else {
+            cout << "\n*** Invalid choice! Try again. ***" << endl;
+        }
+        
+    } while(choice != '3');
+    
+    return 0;
+}
